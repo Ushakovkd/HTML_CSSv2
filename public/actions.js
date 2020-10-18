@@ -27,7 +27,7 @@ function signUpSubmit(event) {
         const emailValue = email.value;
         const passwordValue = password.value;
 
-        const path = 'http://localhost:3000/login';
+        const path = `/login`;
 
         fetch(path, {
             method: 'POST',
