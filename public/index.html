@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money cat</title>
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
+</head>
+<body>
+<div class="header">
+    <img class="header__logo" src="images/logo.png"/>
+    <button class="header__button" onClick="scrollToSignUpForm()">Try it free</button>
+</div>
+
+<div class="mockups">
+    <img class="mockups__image" src="images/mockups.svg"/>
+    <div class="mockups__header">Take control of your finances</div>
+    <div class="mockups__text">
+        Money Cat is a budget and finance tool that touts a lot of best-in-class features, as well as support for
+        multiple currencies. The app includes automatic bank syncing for you balance and expenses.
+    </div>
+    <button class="mockups__button" onClick="scrollToSignUpForm()">Get Started For Free</button>
+</div>
+<div class="advantages">
+    <img class="advantages__image" src="images/your-users.svg"/>
+    <div class="advantages-items">
+        <div class="advantages-item">
+            <div class="advantages-item__header">
+                BUDGETING THAT WORKS
+            </div>
+            <div class="advantages-item__description">
+                Based on the envelope budgeting method - a time-tested system that works!
+            </div>
+        </div>
+        <div class="advantages-item">
+            <div class="advantages-item__header">
+                SYNC & SHARE BUDGETS
+            </div>
+            <div class="advantages-item__description">
+                Put your budget into action with the people who matter most.
+            </div>
+        </div>
+        <div class="advantages-item">
+            <div class="advantages-item__header">
+                SAVE FOR BIG EXPENSES
+            </div>
+            <div class="advantages-item__description">
+                Plan ahead and be prepared. No more surprises!
+            </div>
+        </div>
+    </div>
+</div>
+<div class="registration-form" id="main-registration-form">
+    <div class="registration-form__header">Try It Free</div>
+    <div class="handle-message-input-wrapper" id="form-input-email">
+        <input name="email" type="text" pattern="^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6})*$"
+               class="registration-form__input" placeholder="email" required>
+        <div class=" error-message handle-message-input-wrapper__message hidden"></div>
+    </div>
+    <div class="handle-message-input-wrapper" id="form-input-password">
+        <input name="password" type="password" pattern="^([\w\d\S]){4,16}$" class="registration-form__input"
+               placeholder="password" required>
+        <div class="handle-message-input-wrapper__message error-message hidden"></div>
+    </div>
+    <button class="registration-form__submit-button" onclick="signUpSubmit(event)">Get Started</button>
+</div>
+<div class="footer">Copyright 2020 Money Cat. All rights reserved</div>
+<script type="text/javascript" language="javascript" src="actions.js"></script>
+</body>
+</html>
