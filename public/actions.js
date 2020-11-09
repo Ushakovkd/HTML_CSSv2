@@ -4,52 +4,21 @@ function scrollToSignUpForm() {
 }
 
 function signUpSubmit(event) {
-    let isSuccessValidation = true;
+    const isSuccessValidation = credentialInputValidation();
 
-    const parentForm = document.getElementById("main-registration-form");
-    const inputWrappers = parentForm.getElementsByClassName("handle-message-input-wrapper");
-
-    Array.from(inputWrappers).forEach((wrapper) => {
-        const inputElement = wrapper.getElementsByClassName("registration-form__input")[0];
-
-        inputElement.classList.add("registration-form__input_invalid-pseudo");
-        inputElement.addEventListener('input', (event) => handleVisibilityErrorMessage(event.target), false);
-
-        if (inputElement.validity.patternMismatch || inputElement.validity.valueMissing) {
-            handleVisibilityErrorMessage(inputElement);
-            isSuccessValidation = false;
-        }
-    });
-
-    if (isSuccessValidation) {
+    if (!isSuccessValidation) {
+        event.preventDefault();
+    } else {
         const email = document.getElementById("form-input-email");
         const password = document.getElementById("form-input-password");
         const emailValue = email.value;
         const passwordValue = password.value;
 
-        const path = `/login`;
-
-        fetch(path, {
-            method: 'POST',
-            credentials: 'include',
-            dataType: 'json',
-            body: JSON.stringify({emailValue, passwordValue}),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8'
-            }
-        })
-            .then(response => {
-                if (response.status !== 200) {
-                    throw Error(response.statusText);
-                }
-                return response.json();
-            })
+        loginRequest(emailValue, passwordValue)
             .then(data => {
                 alert(`UserId: ${data.userId}`);
             })
             .catch(err => console.error(err));
-    } else {
-        event.preventDefault();
     }
 }
 
@@ -67,4 +36,40 @@ function handleHideErrorMessage(errorMessageElement) {
     if (!errorMessageElement.classList.contains("hidden")) {
         errorMessageElement.classList.add("hidden");
     }
+}
+
+function credentialInputValidation() {
+    const parentForm = document.getElementById("main-registration-form");
+    const inputWrappers = parentForm.getElementsByClassName("handle-message-input-wrapper");
+
+    Array.from(inputWrappers).forEach((wrapper) => {
+        const inputElement = wrapper.getElementsByClassName("registration-form__input")[0];
+
+        inputElement.classList.add("registration-form__input_invalid-pseudo");
+        inputElement.addEventListener('input', (event) => handleVisibilityErrorMessage(event.target), false);
+
+        if (inputElement.validity.patternMismatch || inputElement.validity.valueMissing) {
+            handleVisibilityErrorMessage(inputElement);
+            return false;
+        }
+    });
+    return true;
+}
+
+function loginRequest(email, password) {
+    fetch('/login', {
+        method: 'POST',
+        credentials: 'include',
+        dataType: 'json',
+        body: JSON.stringify({email, password}),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        }
+    })
+        .then(response => {
+            if (response.status !== 200) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        });
 }
